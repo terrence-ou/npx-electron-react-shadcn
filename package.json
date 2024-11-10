@@ -1,6 +1,6 @@
 {
   "name": "electron-react-shadcn",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An npx cli for creating electron app with react and shadcn",
   "main": "index.js",
   "bin": {
@@ -8,7 +8,7 @@
   },
   "keywords": [],
   "author": "Terrence Ou",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "simple-git": "^3.27.0"
   }
