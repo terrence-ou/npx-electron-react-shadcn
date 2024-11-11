@@ -1,6 +1,11 @@
 const fs = require("fs");
 const path = require("path");
 
+const packageNameRegex =
+  /^(?!.*[ _!@#$%^&*()+=~`|\\:;"'<>,?])[a-z0-9-_.]{1,214}$|^@[a-z0-9-_.]+\/[a-z0-9-_.]{1,214}$/;
+
+const validateProjectName = (projectName) => packageNameRegex.test(projectName);
+
 const writePackage = async (targetDir, packageName) => {
   const packageJsonPath = path.join(targetDir, "package.json");
   try {
@@ -20,5 +25,6 @@ const writePackage = async (targetDir, packageName) => {
 };
 
 module.exports = {
+  validateProjectName,
   writePackage,
 };
