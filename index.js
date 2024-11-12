@@ -4,9 +4,15 @@ const fs = require("fs");
 const path = require("path");
 const simpleGit = require("simple-git");
 const prompts = require("prompts");
-const { validateProjectName, writePackage } = require("./utils");
+const chalk = require("chalk");
+const {
+  validateProjectName,
+  writePackage,
+  writeTheme,
+} = require("./utils");
 
-const repoUrl = "https://github.com/terrence-ou/electron-react-shadcn.git";
+const repoUrl =
+  "https://github.com/terrence-ou/electron-react-shadcn.git";
 
 // Prompt questions
 const initConfirmQuestion = {
@@ -28,7 +34,23 @@ const questions = [
     message: "Please enter your project name.",
     initial: "electron-react-shadcn",
     validate: (value) =>
-      validateProjectName(value) ? true : "Please enter a valid project namel",
+      validateProjectName(value)
+        ? true
+        : "Please enter a valid project namel",
+  },
+  {
+    type: "select",
+    name: "theme",
+    message: "Select a theme",
+    choices: [
+      { title: chalk.hex("#18181b")("Zinc"), value: "zinc" },
+      { title: chalk.hex("#facc15")("Yellow"), value: "yellow" },
+      { title: chalk.hex("#6d28d9")("Violet"), value: "violet" },
+      { title: chalk.hex("#e11d48")("Rose"), value: "rose" },
+      { title: chalk.hex("#f97316")("Orange"), value: "orange" },
+      { title: chalk.hex("#16a34a")("Green"), value: "green" },
+      { title: chalk.hex("#2563eb")("Blue"), value: "blue" },
+    ],
   },
 ];
 
@@ -43,7 +65,7 @@ async function cloneRepo() {
     }
 
     // Prompts for setting up the project
-    const { projectName } = await prompts(questions);
+    const { projectName, theme } = await prompts(questions);
 
     // get project template
     console.log("Getting project template...");
@@ -53,9 +75,21 @@ async function cloneRepo() {
     // Update package.json
     writePackage(targetDir, projectName);
 
+    // Setup Theme
+    const themeFilePath = path.join(
+      targetDir,
+      "src",
+      "renderer",
+      "src",
+      "assets",
+      "theme.css"
+    );
+    writeTheme(themeFilePath, theme);
+
     // remove .git folder
     fs.rm(`${targetDir}/.git`, { recursive: true }, (err) => {
-      if (err) console.error("failed to remove .git folder. Error: ", err);
+      if (err)
+        console.error("failed to remove .git folder. Error: ", err);
     });
 
     console.log(
@@ -64,7 +98,10 @@ async function cloneRepo() {
     console.log(`\ncd ${[projectName]}`);
     console.log("npm install && npm run dev\n");
   } catch (error) {
-    console.error("Failed to get the project template. Error: ", error);
+    console.error(
+      "Failed to get the project template. Error: ",
+      error
+    );
   }
 }
 
