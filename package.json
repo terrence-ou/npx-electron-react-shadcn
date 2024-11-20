@@ -1,6 +1,6 @@
 {
   "name": "electron-react-shadcn",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "An npx cli for creating electron app with react and shadcn",
   "main": "index.js",
   "bin": {
