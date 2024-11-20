@@ -43,7 +43,7 @@ const questions = [
     name: "theme",
     message: "Select a theme",
     choices: [
-      { title: chalk.hex("#18181b")("Zinc"), value: "zinc" },
+      { title: chalk.hex("#808080")("Zinc"), value: "zinc" },
       { title: chalk.hex("#facc15")("Yellow"), value: "yellow" },
       { title: chalk.hex("#6d28d9")("Violet"), value: "violet" },
       { title: chalk.hex("#e11d48")("Rose"), value: "rose" },
